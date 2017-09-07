@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (c) 2016-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -11,6 +11,9 @@
 
 #include <algorithm>
 #include <iostream>
+#if defined(WIN)
+#include <numeric>
+#endif
 
 namespace fasttext {
 

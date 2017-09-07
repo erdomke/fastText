@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (c) 2016-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -19,6 +19,9 @@
 #include <vector>
 #include <queue>
 #include <algorithm>
+#if defined(WIN)
+#include <numeric>
+#endif
 
 
 namespace fasttext {
@@ -650,5 +653,38 @@ void FastText::train(std::shared_ptr<Args> args) {
 int FastText::getDimension() const {
     return args_->dim;
 }
+
+
+#if defined(WIN_LIB)
+void FastText::nn(std::string queryWord, int32_t k, std::vector<std::pair<float, std::string>>& output) {
+  Vector queryVec(args_->dim);
+  Matrix wordVectors(dict_->nwords(), args_->dim);
+  precomputeWordVectors(wordVectors);
+  std::set<std::string> banSet;
+  banSet.insert(queryWord);
+  getVector(queryVec, queryWord);
+
+  real queryNorm = queryVec.norm();
+  if (std::abs(queryNorm) < 1e-8) {
+    queryNorm = 1;
+  }
+  std::priority_queue<std::pair<real, std::string>> heap;
+  Vector vec(args_->dim);
+  for (int32_t i = 0; i < dict_->nwords(); i++) {
+    std::string word = dict_->getWord(i);
+    real dp = wordVectors.dotRow(queryVec, i);
+    heap.push(std::make_pair(dp / queryNorm, word));
+  }
+  int32_t i = 0;
+  while (i < k && heap.size() > 0) {
+    auto it = banSet.find(heap.top().second);
+    if (it == banSet.end()) {
+      output.push_back(heap.top());
+      i++;
+    }
+    heap.pop();
+  }
+}
+#endif
 
 }

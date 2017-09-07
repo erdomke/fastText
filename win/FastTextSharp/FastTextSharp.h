@@ -1,0 +1,3 @@
+﻿// FastTextSharp.h
+
+#pragma once

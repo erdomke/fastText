@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (c) 2016-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -89,6 +89,11 @@ class FastText {
 
     void loadVectors(std::string);
     int getDimension() const;
+
+    // New API
+#if defined(WIN_LIB)
+    void nn(std::string, int32_t, std::vector<std::pair<real, std::string>>&);
+#endif
 };
 
 }

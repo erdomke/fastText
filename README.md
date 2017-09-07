@@ -1,16 +1,20 @@
 # fastText
 
 fastText is a library for efficient learning of word representations and sentence classification.
+This fork of the project adds support for Windows and .Net projects.  It is based off of the forks
+by [@xiamx](https://github.com/xiamx/fastText) and 
+[@rafael-aero](https://github.com/rafael-aero/fastText/) and 
 
 ## Requirements
 
-**fastText** builds on modern Mac OS and Linux distributions.
-Since it uses C++11 features, it requires a compiler with good C++11 support.
-These include :
+**fastText** can be built on:
 
-* (gcc-4.6.3 or newer) or (clang-3.3 or newer)
+* Windows using
+  * Visual Studio 2017+
+* Mac OS and Linux distributions using 
+  * A compiler with good C++11 support such as (gcc-4.6.3 or newer) or (clang-3.3 or newer)
+  * Compilation is carried out using a Makefile, so you will need to have a working **make**.
 
-Compilation is carried out using a Makefile, so you will need to have a working **make**.
 For the word-similarity evaluation script you will need:
 
 * python 2.6 or newer
@@ -18,7 +22,10 @@ For the word-similarity evaluation script you will need:
 
 ## Building fastText
 
-In order to build `fastText`, use the following:
+In order to build `fastText` 
+
+* on Windows, open `win/fastText.sln` and compile using Visual Studio
+* on a Mac or Linux, use the following:
 
 ```
 $ git clone https://github.com/facebookresearch/fastText.git
@@ -27,12 +34,17 @@ $ make
 ```
 
 This will produce object files for all the classes as well as the main binary `fasttext`.
-If you do not plan on using the default system-wide compiler, update the two macros defined at the beginning of the Makefile (CC and INCLUDES).
+If you do not plan on using the default system-wide compiler, update the two macros defined at the 
+beginning of the Makefile (CC and INCLUDES).
+
+Currently, the Windows project will generate both a command-line executable as well as a C++/CLI
+dll that can be used natively by C# and other .Net language
 
 ## Example use cases
 
 This library has two main use cases: word representation learning and text classification.
-These were described in the two papers [1](#enriching-word-vectors-with-subword-information) and [2](#bag-of-tricks-for-efficient-text-classification).
+These were described in the two papers [1](#enriching-word-vectors-with-subword-information) and 
+[2](#bag-of-tricks-for-efficient-text-classification).
 
 ### Word representation learning
 
